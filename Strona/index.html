@@ -576,8 +576,20 @@ section{padding:80px max(48px, calc((100vw - 1400px) / 2 + 48px));}
 .tt-list{display:flex;flex-direction:column;gap:5px;}
 .tt-item{color:#666;font-size:11px;font-family:'Geist',sans-serif;}
 
-/* CONTACT */
-#contact{border-top:0.5px solid var(--b);}
+@media(max-width:768px){
+  .tt-popup{
+    position:fixed;
+    bottom:auto;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:calc(100vw - 32px);
+    max-width:340px;
+    z-index:500;
+  }
+  .tt-popup::after{display:none;}
+  .has-tooltip{cursor:pointer;}
+}
 .contact-layout{display:grid;grid-template-columns:1fr 2fr;gap:64px;max-width:1000px;}
 .contact-intro{}
 .contact-heading{font-size:22px;font-weight:500;letter-spacing:-0.02em;line-height:1.2;margin-bottom:10px;color:#ffffff!important;}
@@ -684,7 +696,7 @@ footer{
 
   /* ABOUT */
   .about-layout{grid-template-columns:1fr;gap:24px;}
-  .about-photo{max-width:240px;}
+  .about-photo{max-width:240px;margin:0 auto;}
   .about-text{padding:16px;}
 
   /* LIFESTYLE */
@@ -1259,7 +1271,7 @@ function runTerminal() {
 }
 
 /* LIFESTYLE TOOLTIPS */
-const countries = ['Germany','Czech Republic','Slovakia','Hungary','Malta','Slovenia','Italy','Spain','France','Portugal','Estonia','Ukraine','Greece','Norway','Sweden','Denmark','England','Finland','Maldives','Netherlands','Lithuania','Latvia','USA','Bahamas','Belgium','Austria','Luxembourg','Canada','Mexico','Dominican Republic','Egypt','Zanzibar','Bulgaria','Croatia','Albania','Montenegro','Cyprus','Turkey','Romania','Scotland','Thailand','Serbia','Monaco'];
+const countries = ['Germany','Czech Republic','Slovakia','Hungary','Malta','Slovenia','Italy','Spain','France','Portugal','Estonia','Ukraine','Greece','Norway','Sweden','Denmark','England','Finland','Maldives','Netherlands','Lithuania','Latvia','USA','Bahamas','Belgium','Austria','Luxembourg','Canada','Mexico','Dominican Republic','Egypt','Tanzania','Bulgaria','Croatia','Albania','Montenegro','Cyprus','Turkey','Romania','Scotland','Thailand','Serbia','Monaco'];
 const languages = [
   {name:'Español',flag:'🇪🇸',level:'conversational'},
   {name:'Deutsch',flag:'🇩🇪',level:'learning'},
@@ -1350,6 +1362,38 @@ document.querySelectorAll('.has-tooltip').forEach(tag => {
     clearTypeIntervals();
     activeTooltip = null;
   });
+
+  tag.addEventListener('click', (e) => {
+    if(window.innerWidth > 768) return; // only mobile
+    e.stopPropagation();
+    const isOpen = popup.style.display === 'block';
+    if(activeTooltip && activeTooltip !== popup) activeTooltip.style.display = 'none';
+    popup.style.display = isOpen ? 'none' : 'block';
+    activeTooltip = isOpen ? null : popup;
+    if(!isOpen){
+      if(id === 'tt-travel'){
+        const items = travelGrid.querySelectorAll('.tt-grid-item');
+        typeInItems(Array.from(items), 30);
+      }
+      if(id === 'tt-languages'){
+        clearTypeIntervals();
+        const rows = langsGrid.querySelectorAll('.tt-lang-row');
+        rows.forEach((r,i) => {
+          r.style.opacity = '0'; r.style.transform = 'translateX(-6px)';
+          const iv = setInterval(() => {
+            r.style.transition = 'opacity 0.2s, transform 0.2s';
+            r.style.opacity = '1'; r.style.transform = 'none';
+            clearInterval(iv);
+          }, i * 80);
+          typeIntervals.push(iv);
+        });
+      }
+    }
+  });
+});
+
+document.addEventListener('click', () => {
+  if(activeTooltip){ activeTooltip.style.display = 'none'; activeTooltip = null; }
 });
 
 /* HERO NAME LETTER REVEAL */
