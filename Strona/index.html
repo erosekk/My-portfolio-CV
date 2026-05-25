@@ -953,24 +953,6 @@ footer{
         </div>
       </div>
 
-      <div class="proj-card">
-        <div class="proj-card-top">
-          <div class="proj-icon p4">📊</div>
-          <a href="#" class="proj-external" title="Coming soon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-        </div>
-        <div class="proj-title"><span data-en="AI Ecosystem Dashboard" data-pl="Dashboard Ekosystemu AI">AI Ecosystem Dashboard</span></div>
-        <div class="proj-desc"><span data-en="Unified interface for monitoring AI tools and API usage across multiple providers in one place." data-pl="Ujednolicony interfejs do monitorowania narzędzi AI i API od wielu dostawców.">Unified interface for monitoring AI tools and API usage across multiple providers in one place.</span></div>
-        <div class="proj-footer">
-          <div class="proj-tags">
-            <span class="proj-tag">Claude API</span>
-            <span class="proj-tag">GitHub</span>
-            <span class="proj-tag">Vercel</span>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -1068,7 +1050,7 @@ footer{
         <div class="tt-grid" id="tt-travel-grid"></div>
       </div>
       <div class="tt-popup" id="tt-languages">
-        <div class="tt-header">// <span data-en="currently learning" data-pl="aktualnie uczę się">currently learning</span> <span class="tt-count">5</span></div>
+        <div class="tt-header">// <span data-en="languages" data-pl="języki">languages</span> <span class="tt-count">5</span></div>
         <div class="tt-langs" id="tt-langs-grid"></div>
       </div>
       <div class="tt-popup" id="tt-sports">
@@ -1273,11 +1255,11 @@ function runTerminal() {
 /* LIFESTYLE TOOLTIPS */
 const countries = ['Germany','Czech Republic','Slovakia','Hungary','Malta','Slovenia','Italy','Spain','France','Portugal','Estonia','Ukraine','Greece','Norway','Sweden','Denmark','England','Finland','Maldives','Netherlands','Lithuania','Latvia','USA','Bahamas','Belgium','Austria','Luxembourg','Canada','Mexico','Dominican Republic','Egypt','Tanzania','Bulgaria','Croatia','Albania','Montenegro','Cyprus','Turkey','Romania','Scotland','Thailand','Serbia','Monaco'];
 const languages = [
-  {name:'Español',flag:'🇪🇸',level:'conversational'},
-  {name:'Deutsch',flag:'🇩🇪',level:'learning'},
-  {name:'Русский',flag:'🇷🇺',level:'basics'},
-  {name:'English',flag:'🇬🇧',level:'communicative'},
-  {name:'Italiano',flag:'🇮🇹',level:'learning'},
+  {name:'Polski',flag:'🇵🇱',level:'ojczysty',levelEn:'native'},
+  {name:'English',flag:'🇬🇧',level:'B2',levelEn:'B2'},
+  {name:'Español',flag:'🇪🇸',level:'A1',levelEn:'A1'},
+  {name:'Deutsch',flag:'🇩🇪',level:'w trakcie nauki',levelEn:'learning'},
+  {name:'Русский',flag:'🇷🇺',level:'w trakcie nauki',levelEn:'learning'},
 ];
 
 const travelGrid = document.getElementById('tt-travel-grid');
@@ -1296,7 +1278,9 @@ if (langsGrid) {
   languages.forEach(l => {
     const row = document.createElement('div');
     row.className = 'tt-lang-row';
-    row.innerHTML = `<span class="tt-lang-name">${l.flag} ${l.name}</span><span class="tt-lang-level">${l.level}</span>`;
+    const currentLang = document.documentElement.lang || 'en';
+    const level = (currentLang === 'pl' && l.level) ? l.level : (l.levelEn || l.level);
+    row.innerHTML = `<span class="tt-lang-name">${l.flag} ${l.name}</span><span class="tt-lang-level">${level}</span>`;
     langsGrid.appendChild(row);
   });
 }
