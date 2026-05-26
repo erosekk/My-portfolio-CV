@@ -688,7 +688,8 @@ footer{
   section{padding:48px 20px;}
 
   /* PROJECTS */
-  .proj-card{flex:0 0 calc(80vw);min-width:260px;}
+  .proj-card{flex:0 0 calc(100vw - 32px);min-width:unset;}
+  .projects-track-wrap{padding:0 16px;overflow:hidden;}
 
   /* TOOLS */
   .tools-layout{grid-template-columns:1fr;gap:32px;}
@@ -732,7 +733,7 @@ footer{
   section{padding:40px 16px;}
 
   /* PROJECTS */
-  .proj-card{flex:0 0 calc(90vw);}
+  .proj-card{flex:0 0 82vw;}
 
   /* TOOLS */
   .tools-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
@@ -1593,12 +1594,12 @@ if (track && wrap) {
   let current = 0;
   const cards = track.querySelectorAll('.proj-card');
   const total = cards.length;
-  const visible = 3;
 
   function getCardWidth() {
     return cards[0] ? cards[0].getBoundingClientRect().width + 16 : 0;
   }
-  function maxIndex() { return Math.max(0, total - visible); }
+  function getVisible(){ return window.innerWidth <= 768 ? 1 : 3; }
+  function maxIndex() { return Math.max(0, total - getVisible()); }
 
   function updateSlider(animated = true) {
     current = Math.max(0, Math.min(current, maxIndex()));
@@ -1637,8 +1638,7 @@ if (track && wrap) {
     isDragging = false;
     wrap.style.cursor = 'grab';
     const delta = startX - x;
-    const cw = getCardWidth();
-    if (Math.abs(delta) > cw * 0.2) {
+    if (Math.abs(delta) > 50) {
       current += delta > 0 ? 1 : -1;
     }
     updateSlider(true);
