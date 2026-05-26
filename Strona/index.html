@@ -1662,7 +1662,7 @@ if (track && wrap) {
   });
 
   wrap.addEventListener('touchstart', e => dragBegin(e.touches[0].clientX), {passive:true});
-  wrap.addEventListener('touchmove', e => dragMove(e.touches[0].clientX), {passive:true});
+  wrap.addEventListener('touchmove', e => { e.preventDefault(); dragMove(e.touches[0].clientX); }, {passive:false});
   wrap.addEventListener('touchend', e => dragEnd(e.changedTouches[0].clientX));
 
   track.querySelectorAll('a').forEach(a => {
