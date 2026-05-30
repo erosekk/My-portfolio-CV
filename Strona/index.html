@@ -1430,13 +1430,38 @@ document.addEventListener('click', () => {
 (function(){
   const canvas = document.getElementById('starsCanvas');
   const ctx = canvas.getContext('2d');
-  let W, H, pts = [], mouse = {x:0, y:0};
-  const N = 80;
+  let W = 0, H = 0, pts = [], mouse = {x:0, y:0};
+  let lastFrame = performance.now();
+  let resizeTimer = null;
+  const mobileStarfield = window.matchMedia('(max-width: 768px)');
+  const N = mobileStarfield.matches ? 56 : 80;
 
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+  function getCanvasSize(force = false){
+    const nextW = Math.round(window.innerWidth);
+    const nextH = Math.round(window.innerHeight);
+    const widthChanged = Math.abs(nextW - W) > 2;
+    const mobileToolbarResize = mobileStarfield.matches && H && !force && !widthChanged && Math.abs(nextH - H) < 140;
+    if(mobileToolbarResize){
+      return {w:W, h:H, changed:false};
+    }
+    return {w:nextW, h:nextH, changed:widthChanged || Math.abs(nextH - H) > 2};
+  }
+
+  function resize(force = false){
+    if(!mobileStarfield.matches){
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      drawNebula();
+      return true;
+    }
+
+    const size = getCanvasSize(force);
+    if(!size.changed) return false;
+    W = canvas.width = size.w;
+    H = canvas.height = size.h;
+    canvas.style.height = H + 'px';
     drawNebula();
+    return true;
   }
 
   /* Static nebula — drawn once onto an offscreen canvas */
@@ -1502,7 +1527,10 @@ document.addEventListener('click', () => {
     return Math.max(0.45, Math.min(1, a));
   }
 
-  function draw(){
+  function draw(now = performance.now()){
+    const dt = Math.min(2, Math.max(0.25, (now - lastFrame) / 16.67 || 1));
+    const starStep = mobileStarfield.matches ? dt : 1;
+    lastFrame = now;
     const alpha = getAlpha();
     ctx.clearRect(0,0,W,H);
 
@@ -1535,7 +1563,7 @@ document.addEventListener('click', () => {
 
     /* particles */
     pts.forEach(p=>{
-      p.twinkle += p.ts;
+      p.twinkle += p.ts * starStep;
       const op = p.op*(0.75+0.25*Math.sin(p.twinkle));
       ctx.globalAlpha = op * alpha;
       ctx.beginPath();
@@ -1543,7 +1571,7 @@ document.addEventListener('click', () => {
       ctx.fillStyle = 'rgba(255,255,255,1)';
       ctx.fill();
 
-      p.x += p.vx; p.y += p.vy;
+      p.x += p.vx * starStep; p.y += p.vy * starStep;
       if(p.x<0||p.x>W) p.vx*=-1;
       if(p.y<0||p.y>H) p.vy*=-1;
     });
@@ -1552,7 +1580,18 @@ document.addEventListener('click', () => {
     requestAnimationFrame(draw);
   }
 
-  window.addEventListener('resize', ()=>{ resize(); initPts(); });
+  window.addEventListener('resize', ()=>{
+    if(!mobileStarfield.matches){
+      resize();
+      initPts();
+      return;
+    }
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(()=>{ if(resize()) initPts(); }, 120);
+  });
+  window.addEventListener('orientationchange', ()=>{
+    setTimeout(()=>{ if(resize(true)) initPts(); }, 250);
+  });
   window.addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
   resize(); initPts(); draw();
 })();
