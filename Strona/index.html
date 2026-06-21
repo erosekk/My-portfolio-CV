@@ -901,18 +901,35 @@ footer{
   <div class="projects-track-wrap">
     <div class="projects-track" id="projectsTrack">
 
-      <div class="proj-card" onclick="window.open('https://kacper-s-phrasebook.vercel.app/','_blank')" style="cursor:pointer">
+      <div class="proj-card" onclick="window.open('https://gtt-app.vercel.app/','_blank')" style="cursor:pointer">
         <div class="proj-card-top">
-          <div class="proj-icon p1">📖</div>
-          <a href="https://kacper-s-phrasebook.vercel.app/" target="_blank" class="proj-external" title="Open project">
+          <div class="proj-icon p3">🚚</div>
+          <a href="https://gtt-app.vercel.app/" target="_blank" class="proj-external" title="Open project">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </a>
         </div>
-        <div class="proj-title"><span data-en="Phrasebook" data-pl="Phrasebook">Phrasebook</span></div>
-        <div class="proj-desc"><span data-en="AI-powered language learning assistant. Contextual phrases, etymology and cultural nuance for curious minds." data-pl="Asystent do nauki języków oparty na AI. Kontekstowe frazy, etymologia i niuanse kulturowe.">AI-powered language learning assistant. Contextual phrases, etymology and cultural nuance for curious minds.</span></div>
+        <div class="proj-title"><span data-en="GTT Quote Assistant" data-pl="GTT Kalkulator Wyceny">GTT Quote Assistant</span></div>
+        <div class="proj-desc"><span data-en="Transport price calculator for international routes. Enter destination, distance and get an instant quote based on custom pricing logic." data-pl="Kalkulator wyceny transportu dla tras międzynarodowych. Podaj cel, dystans i otrzymaj wycenę według własnego wzoru.">Transport price calculator for international routes. Enter destination, distance and get an instant quote based on custom pricing logic.</span></div>
         <div class="proj-footer">
           <div class="proj-tags">
-            <span class="proj-tag">Claude API</span>
+            <span class="proj-tag">Next.js</span>
+            <span class="proj-tag">React</span>
+            <span class="proj-tag">Vercel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card" onclick="window.open('https://centrum-otulone-chatbot.vercel.app/','_blank')" style="cursor:pointer">
+        <div class="proj-card-top">
+          <div class="proj-icon p2">💬</div>
+          <a href="https://centrum-otulone-chatbot.vercel.app/" target="_blank" class="proj-external" title="Open project">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+        <div class="proj-title"><span data-en="Centrum Otulone Chatbot" data-pl="Chatbot Centrum Otulone">Centrum Otulone Chatbot</span></div>
+        <div class="proj-desc"><span data-en="AI-powered chatbot for a wellness center. Answers client questions, provides information about services and creates a warm first contact." data-pl="Chatbot AI dla centrum wellness. Odpowiada na pytania klientów, informuje o usługach i tworzy ciepły pierwszy kontakt.">AI-powered chatbot for a wellness center. Answers client questions, provides information about services and creates a warm first contact.</span></div>
+        <div class="proj-footer">
+          <div class="proj-tags">
             <span class="proj-tag">Next.js</span>
             <span class="proj-tag">Vercel</span>
           </div>
@@ -930,7 +947,24 @@ footer{
         <div class="proj-desc"><span data-en="Smart travel companion for planning and exploring. Real-time data meets curated local knowledge." data-pl="Inteligentny asystent podróży. Dane w czasie rzeczywistym połączone z lokalną wiedzą.">Smart travel companion for planning and exploring. Real-time data meets curated local knowledge.</span></div>
         <div class="proj-footer">
           <div class="proj-tags">
-            <span class="proj-tag">ChatGPT API</span>
+            <span class="proj-tag">Claude API</span>
+            <span class="proj-tag">Next.js</span>
+            <span class="proj-tag">Vercel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card" onclick="window.open('https://kacper-s-phrasebook.vercel.app/','_blank')" style="cursor:pointer">
+        <div class="proj-card-top">
+          <div class="proj-icon p1">📖</div>
+          <a href="https://kacper-s-phrasebook.vercel.app/" target="_blank" class="proj-external" title="Open project">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+        <div class="proj-title"><span data-en="Phrasebook" data-pl="Phrasebook">Phrasebook</span></div>
+        <div class="proj-desc"><span data-en="AI-powered language learning assistant. Contextual phrases, etymology and cultural nuance for curious minds." data-pl="Asystent do nauki języków oparty na AI. Kontekstowe frazy, etymologia i niuanse kulturowe.">AI-powered language learning assistant. Contextual phrases, etymology and cultural nuance for curious minds.</span></div>
+        <div class="proj-footer">
+          <div class="proj-tags">
             <span class="proj-tag">Next.js</span>
             <span class="proj-tag">Vercel</span>
           </div>
@@ -1407,7 +1441,7 @@ document.addEventListener('click', () => {
 (function(){
   const counters = [
     {el: document.getElementById('cnt-countries'), target: 43, duration: 1600, delay: 600},
-    {el: document.getElementById('cnt-projects'), target: 3, duration: 800, delay: 900},
+    {el: document.getElementById('cnt-projects'), target: 5, duration: 800, delay: 900},
     {el: document.getElementById('cnt-langs'), target: 5, duration: 900, delay: 1100},
   ];
 
